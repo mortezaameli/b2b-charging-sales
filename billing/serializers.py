@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BalanceRequest, RechargeRequest
+from .models import BalanceRequest
 
 
 class BalanceRequestSerializer(serializers.ModelSerializer):
@@ -9,8 +9,6 @@ class BalanceRequestSerializer(serializers.ModelSerializer):
         read_only_fields = ['status', 'created_at', 'updated_at']
 
 
-class RechargeRequestSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RechargeRequest
-        fields = ['id', 'seller', 'phone_number', 'amount', 'status', 'created_at']
-        read_only_fields = ['id', 'status', 'created_at', 'seller']
+class RechargeMobileSerializer(serializers.Serializer):
+    amount = serializers.IntegerField(required=True, min_value=0)
+    phone_number = serializers.CharField(required=True)

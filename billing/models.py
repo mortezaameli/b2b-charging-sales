@@ -24,11 +24,12 @@ class BalanceRequest(models.Model):
 
         # Check if any transactions already exist for this balance request
         if hasattr(self, 'credit_transaction') and self.credit_transaction is not None:
-            raise ValueError("This balance request has already been processed.")
+            return
+            # raise ValueError("This balance request has already been processed.")
 
         self.seller.update_balance(self.amount, 'credit', balance_request=self)
         self.status = self.APPROVED
-    
+
     @transaction.atomic
     def save(self, *args, **kwargs):
         if self.pk:  # Check if this is an update (i.e., not a new object)
@@ -41,42 +42,42 @@ class BalanceRequest(models.Model):
         return f"{self.seller.user.username} - {self.amount} ({self.status})"
 
 
-class RechargeRequest(models.Model):
-    PENDING = 'pending'
-    SUCCESS = 'success'
-    FAILED = 'failed'
-    STATUS_CHOICES = [
-        (PENDING, 'Pending'),
-        (SUCCESS, 'Success'),
-        (FAILED, 'Failed'),
-    ]
+# class RechargeRequest(models.Model):
+#     PENDING = 'pending'
+#     SUCCESS = 'success'
+#     FAILED = 'failed'
+#     STATUS_CHOICES = [
+#         (PENDING, 'Pending'),
+#         (SUCCESS, 'Success'),
+#         (FAILED, 'Failed'),
+#     ]
 
-    seller = models.ForeignKey(
-        Seller, on_delete=models.CASCADE, related_name='recharge_requests'
-    )
-    phone_number = models.CharField(max_length=15)
-    amount = models.DecimalField(max_digits=15, decimal_places=0)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+#     seller = models.ForeignKey(
+#         Seller, on_delete=models.CASCADE, related_name='recharge_requests'
+#     )
+#     phone_number = models.CharField(max_length=15)
+#     amount = models.DecimalField(max_digits=15, decimal_places=0)
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=PENDING)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
-    @transaction.atomic
-    def process_recharge(self):
-        """Process the recharge request and update seller balance."""
-        # Ensure recharge hasn't already succeeded
-        if self.status != self.PENDING:
-            raise ValueError("Recharge request has already been processed.")
+#     @transaction.atomic
+#     def process_recharge(self):
+#         """Process the recharge request and update seller balance."""
+#         # Ensure recharge hasn't already succeeded
+#         if self.status != self.PENDING:
+#             raise ValueError("Recharge request has already been processed.")
 
-        # Check seller's balance
-        if not self.seller.check_balance(self.amount):
-            self.status = self.FAILED
-            self.save()
-            raise ValueError("Insufficient balance for recharge.")
+#         # Check seller's balance
+#         if not self.seller.check_balance(self.amount):
+#             self.status = self.FAILED
+#             self.save()
+#             raise ValueError("Insufficient balance for recharge.")
 
-        # Deduct balance and mark as success
-        self.seller.update_balance(-self.amount)
-        self.status = self.SUCCESS
-        self.save()
+#         # Deduct balance and mark as success
+#         self.seller.update_balance(-self.amount)
+#         self.status = self.SUCCESS
+#         self.save()
 
-    def __str__(self):
-        return f"Recharge {self.amount} for {self.phone_number} - Status: {self.status}"
+#     def __str__(self):
+#         return f"Recharge {self.amount} for {self.phone_number} - Status: {self.status}"

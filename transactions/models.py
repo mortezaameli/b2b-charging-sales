@@ -18,11 +18,11 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     amount = models.DecimalField(max_digits=15, decimal_places=0)
     balance_request = models.OneToOneField(
-        BalanceRequest, 
-        on_delete=models.CASCADE, 
-        null=True, 
-        blank=True, 
-        related_name='credit_transaction'
+        BalanceRequest,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='credit_transaction',
     )
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
