@@ -3,9 +3,12 @@ from . import views
 
 
 urlpatterns = [
-    path('recharge/', views.RechargeCreateView.as_view(), name='create_recharge'),
     path(
-        'recharge/<int:id>/', views.RechargeDetailView.as_view(), name='recharge_status'
+        'balance-request/', views.BalanceRequestCreateView.as_view(), name='balance-request'
     ),
-    path('recharges/', views.RechargeListView.as_view(), name='recharge_list'),
+    # path('recharge/', views.RechargeCreateView.as_view(), name='create_recharge'),
+    # path(
+    #     'recharge/<int:id>/', views.RechargeDetailView.as_view(), name='recharge_status'
+    # ),
+    # path('recharges/', views.RechargeListView.as_view(), name='recharge_list'),
 ]
