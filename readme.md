@@ -6,6 +6,11 @@ docker-compose -f docker-compose.develop.yml build
 docker-compose -f docker-compose.develop.yml up
 ```
 
+## Swagger APIs page
+```
+http://localhost:8000/swagger/
+```
+
 ---
 
 # Start project in testing mode
