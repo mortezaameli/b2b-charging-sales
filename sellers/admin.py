@@ -4,4 +4,4 @@ from sellers.models import Seller
 
 @admin.register(Seller)
 class SellerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'balance']
+    list_display = ['id', 'user', 'balance']

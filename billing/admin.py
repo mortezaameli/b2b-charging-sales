@@ -4,4 +4,4 @@ from billing.models import BalanceRequest
 
 @admin.register(BalanceRequest)
 class BalanceRequestAdmin(admin.ModelAdmin):
-    list_display = ['seller', 'amount', 'status']
+    list_display = ['id', 'seller', 'amount', 'status']

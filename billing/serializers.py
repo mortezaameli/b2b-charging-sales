@@ -5,8 +5,8 @@ from .models import BalanceRequest
 class BalanceRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = BalanceRequest
-        fields = ['amount', 'status', 'created_at', 'updated_at']
-        read_only_fields = ['status', 'created_at', 'updated_at']
+        fields = ['id', 'amount', 'status', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'status', 'created_at', 'updated_at']
 
 
 class RechargeMobileSerializer(serializers.Serializer):

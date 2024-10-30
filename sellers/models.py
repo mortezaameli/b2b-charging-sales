@@ -19,21 +19,17 @@ class Seller(models.Model):
         """Check if the seller has enough balance for a transaction."""
         return self.balance >= amount
 
-    # @transaction.atomic
     def update_balance(self, amount, transaction_type, balance_request=None):
-        if transaction_type == 'debit' and not self.check_balance(
-            amount
-        ):  # TODO: dont use hardcode
+        Transaction = apps.get_model('transactions', 'Transaction')
+        if transaction_type == Transaction.DEBIT and not self.check_balance(amount):
             raise ValueError("Insufficient balance")
 
         # Update balance
         self.balance += (
-            abs(amount) if transaction_type == 'credit' else -abs(amount)
-        )  # TODO: dont use hardcode
+            abs(amount) if transaction_type == Transaction.CREDIT else -abs(amount)
+        )
         self.save()
 
-        # Log the transaction with lazy loading of the Transaction model
-        Transaction = apps.get_model('transactions', 'Transaction')
         Transaction.objects.create(
             seller=self,
             transaction_type=transaction_type,
