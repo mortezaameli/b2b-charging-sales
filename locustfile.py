@@ -3,18 +3,17 @@ import json
 
 
 class MyAPITasks(TaskSet):
-    counter = 1
 
     def on_start(self):
         self.create_seller_user(
             {
-                "username": f"user{self.user.username}",
+                "username": f"{self.user.username}",
                 "password": "ABC==testpassword1",
             }
         )
         self.login(
             {
-                "username": f"user{self.user.username}",
+                "username": f"{self.user.username}",
                 "password": "ABC==testpassword1",
             }
         )
@@ -72,9 +71,6 @@ class MyAPITasks(TaskSet):
                     )
             else:
                 response.failure("Balance request creation failed")
-
-        print(MyAPITasks.counter)
-        MyAPITasks.counter += 1
 
     @task(5)
     def test_recharge_mobiles(self):
