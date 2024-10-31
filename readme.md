@@ -23,7 +23,7 @@ docker-compose -f docker-compose.testing.yml up
 ## Unit Testing
 ```
 docker-compose -f docker-compose.testing.yml exec web \
-python manage.py test
+python src/manage.py test
 ```
 
 ## Load Testing with Locust
@@ -42,5 +42,6 @@ python manage.py test
 
 * Check DB Consistency after loads:
   ```
-  curl --location 'http://localhost:8000/billing/check-db-consistency/'
+  curl --location 'http://localhost:8000/billing/check-db-consistency/' \
+  --header 'Authorization: 1234'
   ```
