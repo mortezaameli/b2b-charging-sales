@@ -43,9 +43,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'rest_framework',
     'drf_yasg',
-    # 'auth',
     'sellers',
-    'transactions',
     'billing',
 ]
 
@@ -84,24 +82,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # sqlite3 db
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# postgres db
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'), # 'db', # Refers to the service name in docker-compose.yml
-        'PORT': os.getenv('POSTGRES_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# postgres db
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': os.getenv('POSTGRES_HOST'), # 'db', # Refers to the service name in docker-compose.yml
+#         'PORT': os.getenv('POSTGRES_PORT'),
+#     }
+# }
 
 
 # Password validation
@@ -161,3 +159,5 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+TESTING_API_TOKEN = "1234"

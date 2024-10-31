@@ -2,6 +2,8 @@ from locust import TaskSet, HttpUser, between, task
 import json
 
 
+TESTING_API_TOKEN = "1234"
+
 class MyAPITasks(TaskSet):
 
     def on_start(self):
@@ -67,7 +69,10 @@ class MyAPITasks(TaskSet):
                     )
                     self.client.patch(
                         approve_url,
-                        headers=self.headers,
+                        headers={
+                            "Authorization": TESTING_API_TOKEN,
+                            "Content-Type": "application/json",
+                        },
                     )
             else:
                 response.failure("Balance request creation failed")

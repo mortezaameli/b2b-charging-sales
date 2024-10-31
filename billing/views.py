@@ -7,16 +7,13 @@ from . import services as BillingServices
 from sellers.models import Seller
 from .serializers import BalanceRequestSerializer, RechargeMobileSerializer
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import AllowAny
-from django.forms.models import model_to_dict
+from .permissions import SpecialTestingTokenPermission
 
 
 class BalanceRequestCreateView(CreateAPIView):
     serializer_class = BalanceRequestSerializer
-    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        # Ensure that only a seller can make a request
         seller = get_object_or_404(Seller, user=self.request.user)
         serializer.save(seller=seller)
 
@@ -46,6 +43,7 @@ class RechargeMobileAPIView(APIView):
 
 
 class BalanceRequestApproveView(APIView):
+    permission_classes = [SpecialTestingTokenPermission]
 
     def patch(self, request, pk):
         try:
@@ -66,7 +64,7 @@ class BalanceRequestApproveView(APIView):
 
 
 class CheckDbConsistencyView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [SpecialTestingTokenPermission]
 
     def get(self, request):
         try:

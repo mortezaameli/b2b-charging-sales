@@ -20,7 +20,7 @@ class Seller(models.Model):
         return self.balance >= amount
 
     def update_balance(self, amount, transaction_type, balance_request=None):
-        Transaction = apps.get_model('transactions', 'Transaction')
+        Transaction = apps.get_model('billing', 'Transaction')
         if transaction_type == Transaction.DEBIT and not self.check_balance(amount):
             raise ValueError("Insufficient balance")
 

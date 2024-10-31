@@ -1,8 +1,7 @@
 from django.db import transaction
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
-from transactions.models import Transaction
-from .models import BalanceRequest, Seller
+from .models import BalanceRequest, Seller, Transaction
 from django.db.models import Sum, OuterRef, Subquery
 
 

@@ -12,11 +12,8 @@ class SellerSerializer(serializers.ModelSerializer):
         fields = ('username', 'password')
 
     def create(self, validated_data):
-        # Create the User
         user = User.objects.create_user(
             username=validated_data['username'], password=validated_data['password']
         )
-
-        # Create the Seller
         seller = Seller.objects.create(user=user)
         return seller

@@ -2,9 +2,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth import get_user_model
-from billing.models import BalanceRequest
+from billing.models import BalanceRequest, Transaction
 from sellers.models import Seller
-from transactions.models import Transaction
 from rest_framework.test import APIClient
 from django.db.models import Sum
 
